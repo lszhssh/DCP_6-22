@@ -13,6 +13,8 @@ import java.util.Arrays;
 // string "bedbathandbeyond", return either ['bed', 'bath', 'and', 'beyond] 
 // or ['bedbath', 'and', 'beyond'].
 
+// Solution time: 40 minutes
+
 public class StringConstr {
     public static ArrayList<String> strConstr(String target, ArrayList<String> dict) {
         ArrayList<ArrayList<String>> canConstr = new ArrayList<>();

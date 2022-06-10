@@ -7,7 +7,7 @@
 // to build the nth house with kth color, return the minimum cost which 
 // achieves this goal.
 
-// Solution time:
+// Solution time: incomplete
 
 public class Houses {
     public static int minCost(int[][] costs) {
