@@ -24,12 +24,6 @@ public class TrappedWater {
             hills.add(elevations.length - 1);
         }
 
-        // testing
-        // for (Integer i : hills) {
-        //     System.out.print(i + " ");
-        // }
-        // System.out.println();
-
         // get the amount of trapped water
         int trappedWaterCnt = 0;
         for (int j = 0; j < hills.size() - 1; j++) {
@@ -43,20 +37,64 @@ public class TrappedWater {
         return trappedWaterCnt;
     }
 
+    public static int optimTrappedWater(int[] elevations) {
+        int firstHillIdx = -1;
+        int secondHillIdx = -1;
+        int trappedWaterCnt = 0;
+        if (elevations[0] != 0 && elevations[0] > elevations[1]) {
+            firstHillIdx = 0;
+        }
+        for (int i = 1; i < elevations.length - 1; i++) {
+            if (elevations[i] > elevations[i - 1] && elevations[i] > elevations[i + 1]) {
+                if (firstHillIdx == -1) {
+                    firstHillIdx = i;
+                } else {
+                    secondHillIdx = i;
+                }
+            }
+            if (firstHillIdx != -1 && secondHillIdx != -1) {
+                int minHeight = min(elevations[firstHillIdx], elevations[secondHillIdx]);
+                for (int j = firstHillIdx + 1; j < secondHillIdx; j++) {
+                    trappedWaterCnt += minHeight - elevations[j];
+                }
+                firstHillIdx = secondHillIdx;
+                secondHillIdx = -1;
+            }
+        }
+        if (elevations[elevations.length - 1] != 0 && 
+                elevations[elevations.length - 1] > elevations[elevations.length - 2]) {
+            secondHillIdx = elevations.length - 1;
+        }
+        if (firstHillIdx != -1 && secondHillIdx != -1) {
+            int minHeight = min(elevations[firstHillIdx], elevations[secondHillIdx]);
+            for (int j = firstHillIdx + 1; j < secondHillIdx; j++) {
+                trappedWaterCnt += minHeight - elevations[j];
+            }
+            firstHillIdx = secondHillIdx;
+            secondHillIdx = -1;
+        }
+        return trappedWaterCnt;
+    }
+
     public static void main(String[] args) {
         int[] e1 = new int[] {2, 1, 2};
         System.out.println(TrappedWater.trappedWater(e1)); //exp: 1
+        System.out.println(TrappedWater.optimTrappedWater(e1)); //exp: 1
 
         int[] e2 = new int[] {3, 0, 1, 3, 0, 5};
         System.out.println(TrappedWater.trappedWater(e2)); //exp: 8
+        System.out.println(TrappedWater.optimTrappedWater(e2)); //exp: 8
 
         int[] e3 = new int[] {0, 3, 0, 0, 0};
         System.out.println(TrappedWater.trappedWater(e3)); //exp: 0
+        System.out.println(TrappedWater.optimTrappedWater(e3)); //exp: 0
 
         int[] e4 = new int[] {2, 2, 2};
         System.out.println(TrappedWater.trappedWater(e4)); //exp: 0
+        System.out.println(TrappedWater.optimTrappedWater(e4)); //exp: 0
 
         int[] e5 = new int[] {1, 3, 5, 3, 1};
         System.out.println(TrappedWater.trappedWater(e5)); //exp: 0
+        System.out.println(TrappedWater.optimTrappedWater(e5)); //exp: 0
     }
 }
