@@ -1,6 +1,49 @@
-// 6/9/22:
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Stack;
 
-// Given a string of round, curly, and square open and closing brackets, 
-// return whether the brackets are balanced (well-formed).
-// For example, given the string "([])[]({})", you should return true.
-// Given the string "([)]" or "((()", you should return false.
+// 6/9/22
+
+public class BalancedBrackets {
+    Stack<String> bracketStack;
+    // ArrayList<String> openBrackets = new ArrayList<>(Arrays.asList("(", "[", "{"));
+    // ArrayList<String> closingBrackets = new ArrayList<>(Arrays.asList(")", "]", "}"));
+    HashMap<String, String> bracketPairs = new HashMap<>();
+
+    public BalancedBrackets() {
+        this.bracketStack = new Stack<String>();
+        this.bracketPairs.put("(", ")");
+        this.bracketPairs.put("[", "]");
+        this.bracketPairs.put("{", "}");
+    }
+
+    public boolean isBalanced(String bracketSequence) {
+        // this.bracketStack.push(bracketSequence.substring(0, 1));
+        for (int i = 0; i < bracketSequence.length(); i++) {
+            if (this.bracketPairs.containsKey(bracketSequence.substring(i, i+1))) {
+                this.bracketStack.push(bracketSequence.substring(i, i+1));
+            } else if (this.bracketPairs.containsValue(bracketSequence.substring(i, i+1))) {
+                if (this.bracketStack.empty()) {
+                    return false;
+                }
+                String topOfStack = this.bracketStack.pop();
+                if (!this.bracketPairs.get(topOfStack).equals(bracketSequence.substring(i, i+1))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        BalancedBrackets bb = new BalancedBrackets();
+        
+        String bs1 = "(())[{}]";
+        System.out.println(bb.isBalanced(bs1)); //exp: true
+
+        String bs2 = "())[{}]";
+        System.out.println(bb.isBalanced(bs2)); //exp: false
+    }
+}
