@@ -1,15 +1,10 @@
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Stack;
 
 // 6/9/22
 
 public class BalancedBrackets {
     Stack<String> bracketStack;
-    // ArrayList<String> openBrackets = new ArrayList<>(Arrays.asList("(", "[", "{"));
-    // ArrayList<String> closingBrackets = new ArrayList<>(Arrays.asList(")", "]", "}"));
     HashMap<String, String> bracketPairs = new HashMap<>();
 
     public BalancedBrackets() {
@@ -20,7 +15,6 @@ public class BalancedBrackets {
     }
 
     public boolean isBalanced(String bracketSequence) {
-        // this.bracketStack.push(bracketSequence.substring(0, 1));
         for (int i = 0; i < bracketSequence.length(); i++) {
             if (this.bracketPairs.containsKey(bracketSequence.substring(i, i+1))) {
                 this.bracketStack.push(bracketSequence.substring(i, i+1));
